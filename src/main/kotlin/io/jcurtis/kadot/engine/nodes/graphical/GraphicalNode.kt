@@ -1,5 +1,7 @@
-package io.jcurtis.kadot.engine.nodes
+package io.jcurtis.kadot.engine.nodes.graphical
 
+import io.jcurtis.kadot.engine.nodes.Node
+import io.jcurtis.kadot.engine.nodes.NodeType
 import java.awt.Graphics2D
 import java.awt.image.ImageObserver
 

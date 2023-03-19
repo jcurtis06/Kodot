@@ -1,6 +1,6 @@
 package io.jcurtis.kadot.engine.nodes
 
-import java.awt.Graphics
+import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
 import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 import java.awt.image.ImageObserver

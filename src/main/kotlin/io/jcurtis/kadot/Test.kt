@@ -5,7 +5,7 @@ import io.jcurtis.kadot.engine.nodes.Node
 import io.jcurtis.kadot.engine.nodes.NodeType
 import io.jcurtis.kadot.engine.nodes.Root
 import io.jcurtis.kadot.engine.nodes.Sprite
-import io.jcurtis.kadot.engine.nodes.ui.Text
+import io.jcurtis.kadot.engine.nodes.graphical.ui.Text
 
 fun main() {
     val engine = KadotEngine()

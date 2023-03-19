@@ -1,12 +1,9 @@
 package io.jcurtis.kadot.engine
 
-import io.jcurtis.kadot.engine.nodes.GraphicalNode
+import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
 import io.jcurtis.kadot.engine.nodes.Node
-import io.jcurtis.kadot.engine.nodes.Sprite
 import java.awt.Graphics
 import java.awt.Graphics2D
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
@@ -15,7 +12,10 @@ class KadotEngine(
     private var title: String = "Kadot Engine",
     private var width: Int = 800,
     private var height: Int = 600
-): JPanel(), ActionListener {
+): JPanel(), Runnable {
+    private val thread: Thread = Thread(this)
+    private var lastFrameTime: Long = System.nanoTime()
+
     companion object {
         var nodes = mutableListOf<Node>()
 
@@ -40,12 +40,17 @@ class KadotEngine(
             frame.add(this)
             frame.addKeyListener(Input())
         }
+
+        thread.start()
     }
 
     private fun update() {
+        println("Updating")
         for (node in nodes) {
-            node.update()
+            println("Updating ${node.name}")
+            node.update(System.nanoTime() - lastFrameTime)
         }
+        repaint()
     }
 
     override fun paintComponent(g: Graphics?) {
@@ -59,8 +64,9 @@ class KadotEngine(
         }
     }
 
-    override fun actionPerformed(e: ActionEvent?) {
-        update()
-        repaint()
+    override fun run() {
+        while (true) {
+            update()
+        }
     }
 }
