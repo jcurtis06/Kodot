@@ -1,22 +1,21 @@
 package io.jcurtis.kadot.engine
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.rememberCoroutineScope
-import kotlinx.coroutines.launch
-import androidx.compose.runtime.withFrameNanos
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.ApplicationScope
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.rememberWindowState
 import io.jcurtis.kadot.engine.nodes.Node
-import kotlinx.coroutines.isActive
+import io.jcurtis.kadot.engine.nodes.NodeType
+import io.jcurtis.kadot.engine.nodes.Sprite
+import java.awt.Graphics
+import java.awt.Graphics2D
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import javax.swing.JFrame
+import javax.swing.JPanel
+import javax.swing.SwingUtilities
 
 class KadotEngine(
     private var title: String = "Kadot Engine",
     private var width: Int = 800,
     private var height: Int = 600
-) {
+): JPanel(), ActionListener {
     companion object {
         var nodes = mutableListOf<Node>()
 
@@ -25,34 +24,47 @@ class KadotEngine(
         }
     }
 
-    @Composable
-    fun init(applicationScope: ApplicationScope) {
+    fun init() {
         for (node in nodes) {
             node.ready()
         }
 
-        return Window(
-            onCloseRequest = { applicationScope.exitApplication() },
-            title = title,
-            state = rememberWindowState(width = width.dp, height = height.dp)
-        ) {
-            val coroutineScope = rememberCoroutineScope()
+        SwingUtilities.invokeLater {
+            val frame = JFrame(title)
+            frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+            frame.setSize(width, height)
+            frame.isResizable = false
+            frame.setLocationRelativeTo(null)
+            frame.isVisible = true
 
-            DisposableEffect(Unit) {
-                println("Starting Engine")
-                val job = coroutineScope.launch {
-                    while (isActive) {
-                        withFrameNanos {
-                            for (node in nodes) {
-                                node.update()
-                            }
-                        }
-                    }
-                }
-                onDispose {
-                    job.cancel()
-                }
+            frame.add(this)
+            frame.addKeyListener(Input())
+        }
+    }
+
+    private fun update() {
+        for (node in nodes) {
+            node.update()
+        }
+    }
+
+    override fun paintComponent(g: Graphics?) {
+        super.paintComponent(g)
+
+        val g2d = g as Graphics2D
+        println("Drawing")
+        for (n in nodes) {
+            println("Node: ${n.name}")
+            if (n.type == NodeType.SPRITE) {
+                println("Found Sprite")
+                val sprite = n as Sprite
+                sprite.draw(g2d, this)
             }
         }
+    }
+
+    override fun actionPerformed(e: ActionEvent?) {
+        update()
+        repaint()
     }
 }
