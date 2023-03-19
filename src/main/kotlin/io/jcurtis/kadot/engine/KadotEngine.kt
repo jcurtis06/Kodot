@@ -1,7 +1,7 @@
 package io.jcurtis.kadot.engine
 
+import io.jcurtis.kadot.engine.nodes.GraphicalNode
 import io.jcurtis.kadot.engine.nodes.Node
-import io.jcurtis.kadot.engine.nodes.NodeType
 import io.jcurtis.kadot.engine.nodes.Sprite
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -52,13 +52,9 @@ class KadotEngine(
         super.paintComponent(g)
 
         val g2d = g as Graphics2D
-        println("Drawing")
         for (n in nodes) {
-            println("Node: ${n.name}")
-            if (n.type == NodeType.SPRITE) {
-                println("Found Sprite")
-                val sprite = n as Sprite
-                sprite.draw(g2d, this)
+            if (n is GraphicalNode) {
+                n.draw(g2d, this)
             }
         }
     }

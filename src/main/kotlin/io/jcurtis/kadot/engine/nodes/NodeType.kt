@@ -4,4 +4,5 @@ enum class NodeType {
     NODE,
     ROOT,
     SPRITE,
+    UI,
 }
