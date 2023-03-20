@@ -9,7 +9,7 @@ class CollisionShape(var width: Int, var height: Int) : Node(NodeType.COLLISION_
     var shape: CollisionShape = CollisionShape.RECTANGLE
 
     fun getBounds(): Rectangle {
-        return Rectangle(0, 0, width, height)
+        return Rectangle(position.x.toInt(), position.y.toInt(), width, height)
     }
 
     enum class CollisionShape {

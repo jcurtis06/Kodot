@@ -3,6 +3,7 @@ package io.jcurtis.kadot.engine
 import io.jcurtis.kadot.engine.nodes.Node
 import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
 import io.jcurtis.kadot.engine.nodes.physics.CollisionBody
+import io.jcurtis.kadot.engine.nodes.physics.StaticBody
 import java.awt.Graphics
 import java.awt.Graphics2D
 import javax.swing.JFrame
@@ -13,11 +14,11 @@ import javax.swing.SwingUtilities
 class KadotEngine(
     private var title: String = "Kadot Engine",
     private var width: Int = 800,
-    private var height: Int = 600
+    private var height: Int = 600,
+    maxFrameRate: Int = 240
 ) : JPanel(), Runnable {
     private val thread: Thread = Thread(this)
 
-    var maxFrameRate = 240
     private var targetTime = 1000 / maxFrameRate
     private var lastTime: Long = System.currentTimeMillis()
 
