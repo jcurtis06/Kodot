@@ -1,26 +1,38 @@
 package io.jcurtis.kadot.engine
 
-import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
 import io.jcurtis.kadot.engine.nodes.Node
+import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
+import io.jcurtis.kadot.engine.nodes.physics.CollisionBody
 import java.awt.Graphics
 import java.awt.Graphics2D
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 
+@Suppress("MemberVisibilityCanBePrivate")
 class KadotEngine(
     private var title: String = "Kadot Engine",
     private var width: Int = 800,
     private var height: Int = 600
-): JPanel(), Runnable {
+) : JPanel(), Runnable {
     private val thread: Thread = Thread(this)
-    private var lastFrameTime: Long = System.nanoTime()
+
+    var maxFrameRate = 240
+    private var targetTime = 1000 / maxFrameRate
+    private var lastTime: Long = System.currentTimeMillis()
+
 
     companion object {
         var nodes = mutableListOf<Node>()
+        var colliderNodes = mutableListOf<CollisionBody>()
+        var delta: Double = 0.0
 
         fun registerNode(node: Node) {
             nodes.add(node)
+
+            if (node is CollisionBody) {
+                colliderNodes.add(node)
+            }
         }
     }
 
@@ -45,10 +57,8 @@ class KadotEngine(
     }
 
     private fun update() {
-        println("Updating")
         for (node in nodes) {
-            println("Updating ${node.name}")
-            node.update(System.nanoTime() - lastFrameTime)
+            node.update((delta))
         }
         repaint()
     }
@@ -65,8 +75,27 @@ class KadotEngine(
     }
 
     override fun run() {
+        var currentTime: Long
+        var elapsedTime: Long
+        var sleepTime: Long
+
         while (true) {
+            currentTime = System.currentTimeMillis()
+            elapsedTime = currentTime - lastTime
+            delta = elapsedTime / 1000.0
+
+            if (elapsedTime < targetTime) {
+                sleepTime = targetTime - elapsedTime
+
+                try {
+                    Thread.sleep(sleepTime)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+            }
+
             update()
+            lastTime = currentTime
         }
     }
 }

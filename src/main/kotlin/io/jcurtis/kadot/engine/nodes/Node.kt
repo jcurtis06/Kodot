@@ -46,7 +46,11 @@ open class Node(var type: NodeType, var name: String, var position: Vector2 = Ve
         KadotEngine.registerNode(this)
     }
 
-    open fun update(delta: Long) {}
+    open fun update(delta: Double) {
+        if (parent == null) return
+        if (parent!!.type == NodeType.ROOT) return
+        position = parent!!.position
+    }
 
     open fun ready() {}
 }
