@@ -1,4 +1,4 @@
-package io.jcurtis.kadot.engine
+package io.jcurtis.kadot.engine.io
 
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener

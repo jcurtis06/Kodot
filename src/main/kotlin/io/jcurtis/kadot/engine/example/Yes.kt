@@ -1,8 +1,8 @@
-import io.jcurtis.kadot.engine.KadotEngine
+import io.jcurtis.kadot.engine.Kodot
 import io.jcurtis.kadot.engine.example.Mario
 
 fun main() {
-    KadotEngine.root.addChild(Mario())
-    KadotEngine.init()
+    Kodot.root.addChild(Mario())
+    Kodot.init()
 }
 
