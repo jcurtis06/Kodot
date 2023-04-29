@@ -9,10 +9,6 @@ fun main() {
     val menu = Container(Alignment.CENTER, Sizing.FULL, 10)
     menu.addChild(countLabel)
     menu.addChild(button)
-    menu.addChild(Text("Hello World!"))
-    menu.addChild(Text("Hello World!"))
-    menu.addChild(Text("Hello World!"))
-    menu.addChild(Text("Hello World!"))
 
     Kodot.root.addChild(menu)
 
