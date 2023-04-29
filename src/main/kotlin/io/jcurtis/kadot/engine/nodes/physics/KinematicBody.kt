@@ -1,6 +1,6 @@
 package io.jcurtis.kadot.engine.nodes.physics
 
-import io.jcurtis.kadot.engine.KadotEngine
+import io.jcurtis.kadot.engine.Kodot
 import io.jcurtis.kadot.engine.nodes.NodeType
 import io.jcurtis.kadot.engine.utils.Direction
 import io.jcurtis.kadot.engine.utils.Vector2
@@ -84,7 +84,7 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
     private fun checkCollisionsAt(newPos: Vector2): CollisionBody? {
         val future = Rectangle(newPos.x.toInt(), newPos.y.toInt(), collider!!.width, collider!!.height)
 
-        for (body in KadotEngine.colliderNodes) {
+        for (body in Kodot.colliderNodes) {
             if (body == this) continue
             if (body.collider == null) continue
 

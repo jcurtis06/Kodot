@@ -1,5 +1,6 @@
 package io.jcurtis.kadot.engine
 
+import io.jcurtis.kadot.engine.io.Input
 import io.jcurtis.kadot.engine.nodes.Node
 import io.jcurtis.kadot.engine.nodes.Root
 import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
@@ -11,13 +12,11 @@ import javax.swing.JPanel
 import javax.swing.SwingUtilities
 
 @Suppress("MemberVisibilityCanBePrivate")
-object KadotEngine : JPanel(), Runnable{
-    // You can add getters/setters if you want, but I feel like making this static is better.
+object Kodot : JPanel(), Runnable{
     var title: String = "Kadot Engine"
     var screenWidth: Int = 800
     var screenHeight: Int = 600
     var maxFrameRate: Int = 240
-    // Why not make root static? Because maybe you want to have multiple game scenes active at once.
     var root: Root = Root()
     var targetTime = 1000 / maxFrameRate
     var lastTime: Long = System.currentTimeMillis()

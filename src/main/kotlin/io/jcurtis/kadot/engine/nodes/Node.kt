@@ -1,6 +1,6 @@
 package io.jcurtis.kadot.engine.nodes
 
-import io.jcurtis.kadot.engine.KadotEngine
+import io.jcurtis.kadot.engine.Kodot
 import io.jcurtis.kadot.engine.utils.Vector2
 
 open class Node(var type: NodeType, var name: String, var position: Vector2 = Vector2()) {
@@ -43,7 +43,7 @@ open class Node(var type: NodeType, var name: String, var position: Vector2 = Ve
     }
 
     open fun onTreeEnter() {
-        KadotEngine.registerNode(this)
+        Kodot.registerNode(this)
     }
 
     open fun update(delta: Double) {
