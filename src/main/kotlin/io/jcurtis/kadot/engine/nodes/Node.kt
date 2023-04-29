@@ -4,7 +4,7 @@ import io.jcurtis.kadot.engine.Kodot
 import io.jcurtis.kadot.engine.utils.Vector2
 
 open class Node(var type: NodeType, var name: String, var position: Vector2 = Vector2()) {
-    private val children = mutableListOf<Node>()
+    val children = mutableListOf<Node>()
 
     var parent: Node? = null
 
@@ -12,6 +12,7 @@ open class Node(var type: NodeType, var name: String, var position: Vector2 = Ve
         children.add(node)
         node.parent = this
         node.onTreeEnter()
+        onChildAdded(node)
     }
 
     fun queueFree() {
@@ -49,8 +50,11 @@ open class Node(var type: NodeType, var name: String, var position: Vector2 = Ve
     open fun update(delta: Double) {
         if (parent == null) return
         if (parent!!.type == NodeType.ROOT) return
+        if (parent!!.type == NodeType.UI) return
         position = parent!!.position
     }
 
     open fun ready() {}
+
+    open fun onChildAdded(child: Node) {}
 }

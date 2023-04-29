@@ -1,19 +1,16 @@
 import io.jcurtis.kadot.engine.Kodot
-import io.jcurtis.kadot.engine.nodes.Sprite
-import io.jcurtis.kadot.engine.nodes.graphical.ui.Text
+import io.jcurtis.kadot.engine.nodes.graphical.ui.*
 
 fun main() {
-    val icon = Sprite("images/icon.png")
-    val text = Text("Hello Kodot!")
+    var count = 0
+    val countLabel = Text("0")
+    val button = Button("Add", 80, 60, onClick = { countLabel.text = (++count).toString() })
 
-    icon.position.x = 141.0
-    icon.position.y = 212.0
+    val menu = Container(Alignment.CENTER, Sizing.FULL, 10)
+    menu.addChild(countLabel)
+    menu.addChild(button)
 
-    text.position.x = 350.0
-    text.position.y = 50.0
-
-    Kodot.root.addChild(icon)
-    Kodot.root.addChild(text)
+    Kodot.root.addChild(menu)
 
     Kodot.init()
 }

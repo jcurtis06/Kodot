@@ -12,7 +12,7 @@ import javax.swing.JPanel
 import javax.swing.SwingUtilities
 
 @Suppress("MemberVisibilityCanBePrivate")
-object Kodot : JPanel(), Runnable{
+object Kodot : JPanel(), Runnable {
     var title: String = "Kadot Engine"
     var screenWidth: Int = 800
     var screenHeight: Int = 600
@@ -47,7 +47,9 @@ object Kodot : JPanel(), Runnable{
             frame.isVisible = true
 
             frame.add(this)
-            frame.addKeyListener(Input())
+            frame.addKeyListener(Input)
+            frame.addMouseListener(Input)
+            frame.addMouseMotionListener(Input)
         }
 
         thread.start()
