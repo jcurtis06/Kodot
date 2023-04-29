@@ -1,4 +1,4 @@
-package io.jcurtis.kadot.engine
+package io.jcurtis.kadot.engine.example
 
 import io.jcurtis.kadot.engine.nodes.physics.KinematicBody
 

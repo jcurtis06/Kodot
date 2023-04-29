@@ -1,9 +1,9 @@
 package io.jcurtis.kadot.engine
 
 import io.jcurtis.kadot.engine.nodes.Node
+import io.jcurtis.kadot.engine.nodes.Root
 import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
 import io.jcurtis.kadot.engine.nodes.physics.CollisionBody
-import io.jcurtis.kadot.engine.nodes.physics.StaticBody
 import java.awt.Graphics
 import java.awt.Graphics2D
 import javax.swing.JFrame
@@ -11,29 +11,26 @@ import javax.swing.JPanel
 import javax.swing.SwingUtilities
 
 @Suppress("MemberVisibilityCanBePrivate")
-class KadotEngine(
-    private var title: String = "Kadot Engine",
-    private var width: Int = 800,
-    private var height: Int = 600,
-    maxFrameRate: Int = 240
-) : JPanel(), Runnable {
-    private val thread: Thread = Thread(this)
+object KadotEngine : JPanel(), Runnable{
+    // You can add getters/setters if you want, but I feel like making this static is better.
+    var title: String = "Kadot Engine"
+    var screenWidth: Int = 800
+    var screenHeight: Int = 600
+    var maxFrameRate: Int = 240
+    // Why not make root static? Because maybe you want to have multiple game scenes active at once.
+    var root: Root = Root()
+    var targetTime = 1000 / maxFrameRate
+    var lastTime: Long = System.currentTimeMillis()
+    var nodes = mutableListOf<Node>()
+    var colliderNodes = mutableListOf<CollisionBody>()
+    var delta: Double = 0.0
 
-    private var targetTime = 1000 / maxFrameRate
-    private var lastTime: Long = System.currentTimeMillis()
+    val thread: Thread = Thread(this)
+    fun registerNode(node: Node) {
+        nodes.add(node)
 
-
-    companion object {
-        var nodes = mutableListOf<Node>()
-        var colliderNodes = mutableListOf<CollisionBody>()
-        var delta: Double = 0.0
-
-        fun registerNode(node: Node) {
-            nodes.add(node)
-
-            if (node is CollisionBody) {
-                colliderNodes.add(node)
-            }
+        if (node is CollisionBody) {
+            colliderNodes.add(node)
         }
     }
 
@@ -45,7 +42,7 @@ class KadotEngine(
         SwingUtilities.invokeLater {
             val frame = JFrame(title)
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-            frame.setSize(width, height)
+            frame.setSize(screenWidth, screenHeight)
             frame.isResizable = false
             frame.setLocationRelativeTo(null)
             frame.isVisible = true
