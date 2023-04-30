@@ -15,7 +15,6 @@ object Input : KeyListener, MouseListener, MouseMotionListener {
     override fun keyTyped(e: KeyEvent?) {}
 
     override fun keyPressed(e: KeyEvent?) {
-        println(e?.keyCode)
         if (!pressedKeys.contains(e?.keyCode)) {
             pressedKeys.add(e?.keyCode!!)
         }
