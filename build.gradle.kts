@@ -2,13 +2,22 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.8.10"
+    `maven-publish`
 }
 
-group = "io.jcurtis"
-version = "1.0-SNAPSHOT"
+group = "com.github.jcurtis06"
+version = "1.0.1"
 
 repositories {
     mavenCentral()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
 }
 
 dependencies {
