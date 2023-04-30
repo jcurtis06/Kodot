@@ -5,6 +5,7 @@ import io.jcurtis.kadot.engine.nodes.NodeType
 import io.jcurtis.kadot.engine.utils.Direction
 import io.jcurtis.kadot.engine.utils.Vector2
 import java.awt.Rectangle
+import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 @Suppress("unused")
@@ -32,7 +33,7 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
 
         if (velocity.x < 0) {
             // left
-            for (i in 0..velocity.x.toInt()) {
+            for (i in 0..velocity.x.absoluteValue.roundToInt()) {
                 val cs: CollisionBody? = checkCollisionsAt(Vector2(this.position.x - 1, this.position.y))
                 if (cs != null) {
                     collidingX = true
@@ -99,8 +100,13 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
     fun moveAndSlide(upwards: Direction = Direction.UP) {
         applyVelocity(upwards)
 
-        if (collidingX) velocity = Vector2(0.0, velocity.y)
-        else if (collidingY) velocity = Vector2(velocity.x, 0.0)
+        if (collidingX) {
+            velocity = Vector2(0.0, velocity.y)
+            println("colliding x")
+        } else if (collidingY) {
+            velocity = Vector2(velocity.x, 0.0)
+            println("colliding y")
+        }
     }
 
     open fun onCollision(body: CollisionBody, direction: Direction) {}

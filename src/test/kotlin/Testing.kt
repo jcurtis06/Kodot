@@ -2,15 +2,9 @@ import io.jcurtis.kadot.engine.Kodot
 import io.jcurtis.kadot.engine.nodes.graphical.ui.*
 
 fun main() {
-    var count = 0
-    val countLabel = Text("0")
-    val button = Button("Add", 80, 60, onClick = { countLabel.text = (++count).toString() })
+    val mt = MovementTest()
 
-    val menu = Container(Alignment.CENTER, Sizing.FULL, 10)
-    menu.addChild(countLabel)
-    menu.addChild(button)
-
-    Kodot.root.addChild(menu)
+    Kodot.root.addChild(mt)
 
     Kodot.init()
 }
