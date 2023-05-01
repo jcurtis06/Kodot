@@ -35,6 +35,8 @@ class Player : KinematicBody() {
             velocity.y += 1.0
         }
 
+        println(collidedDirection)
+
         moveAndSlide(Direction.UP)
         velocity = Vector2(0.0, 0.0)
     }

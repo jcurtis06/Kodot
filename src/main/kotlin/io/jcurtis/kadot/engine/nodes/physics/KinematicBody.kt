@@ -13,7 +13,7 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
     private var collidingX = false
     private var collidingY = false
 
-    var collidedDirection: Direction = Direction.NONE
+    var isOnGround = false
 
     var velocity = Vector2(0.0, 0.0)
     private var physicsEnabled = true
@@ -54,8 +54,10 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
                 if (cs != null) {
                     collidingY = true
                     onCollision(cs, Direction.DOWN)
+                    isOnGround = true
                     return
                 }
+                isOnGround = false
                 collidingY = false
                 this.position.y += 1
             }
@@ -74,8 +76,6 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
                 this.position.y -= 1
             }
         }
-
-        if (!collidingX && !collidingY) collidedDirection = Direction.NONE
     }
 
     private fun checkCollisions(newPos: Vector2): Boolean {
@@ -112,6 +112,5 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
     }
 
     open fun onCollision(body: CollisionBody, direction: Direction) {
-        collidedDirection = direction
     }
 }
