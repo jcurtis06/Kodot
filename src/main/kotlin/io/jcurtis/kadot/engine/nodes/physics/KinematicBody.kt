@@ -75,7 +75,7 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
             }
         }
 
-        collidedDirection = Direction.NONE
+        if (!collidingX && !collidingY) collidedDirection = Direction.NONE
     }
 
     private fun checkCollisions(newPos: Vector2): Boolean {

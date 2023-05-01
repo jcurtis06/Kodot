@@ -28,17 +28,12 @@ class Player : KinematicBody() {
 
         // jumping
         if (Input.isKeyPressed(KeyEvent.VK_SPACE)) {
-            velocity.y -= 1.0
+            velocity.y -= 2.0
         }
 
         if (collidedDirection != Direction.DOWN) {
             velocity.y += 1.0
         }
-
-        velocity.y += 1.0
-
-        println("Collided Direction: $collidedDirection")
-
 
         moveAndSlide(Direction.UP)
         velocity = Vector2(0.0, 0.0)
