@@ -32,7 +32,9 @@ open class Node(var type: NodeType, var name: String, var position: Vector2 = Ve
         children.add(node)
         node.parent = this
         node.onTreeEnter()
+
         onChildAdded(node)
+        Kodot.pendingNodes.add(node)
     }
 
     fun queueFree() {
