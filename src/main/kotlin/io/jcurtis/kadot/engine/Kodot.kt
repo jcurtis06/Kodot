@@ -2,42 +2,41 @@ package io.jcurtis.kadot.engine
 
 import io.jcurtis.kadot.engine.io.Input
 import io.jcurtis.kadot.engine.nodes.Node
+import io.jcurtis.kadot.engine.nodes.NodeType
 import io.jcurtis.kadot.engine.nodes.Root
 import io.jcurtis.kadot.engine.nodes.graphical.GraphicalNode
 import io.jcurtis.kadot.engine.nodes.physics.CollisionBody
 import java.awt.Graphics
 import java.awt.Graphics2D
+import java.util.concurrent.CopyOnWriteArrayList
 import javax.swing.JFrame
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
 
 @Suppress("MemberVisibilityCanBePrivate")
 object Kodot : JPanel(), Runnable {
-    var title: String = "Kadot Engine"
+    // Window settings
+    var title: String = "Kodot Engine"
     var screenWidth: Int = 800
     var screenHeight: Int = 600
+
+    // FPS settings
     var maxFrameRate: Int = 240
-    var root: Root = Root()
     var targetTime = 1000 / maxFrameRate
     var lastTime: Long = System.currentTimeMillis()
-    var nodes = mutableListOf<Node>()
-    var colliderNodes = mutableListOf<CollisionBody>()
     var delta: Double = 0.0
 
-    val thread: Thread = Thread(this)
-    fun registerNode(node: Node) {
-        nodes.add(node)
+    // Node lists
+    var nodes = CopyOnWriteArrayList<Node>()
+    var colliderNodes = CopyOnWriteArrayList<CollisionBody>()
 
-        if (node is CollisionBody) {
-            colliderNodes.add(node)
-        }
-    }
+    // Scene management
+    var currentScene: Node = Node(NodeType.NODE, "CurrentScene")
+
+    // Update thread
+    val thread: Thread = Thread(this)
 
     fun init() {
-        for (node in nodes) {
-            node.ready()
-        }
-
         SwingUtilities.invokeLater {
             val frame = JFrame(title)
             frame.defaultCloseOperation = JFrame.EXIT_ON_CLOSE
@@ -55,10 +54,22 @@ object Kodot : JPanel(), Runnable {
         thread.start()
     }
 
+    fun changeScene(newScene: Node) {
+        currentScene = newScene
+        nodes.clear()
+        nodes.addAll(currentScene.deepChildren)
+        nodes.add(newScene)
+
+        for (node in nodes) {
+            node.ready()
+        }
+    }
+
     private fun update() {
         for (node in nodes) {
-            node.update((delta))
+            node.update(delta)
         }
+
         repaint()
     }
 
