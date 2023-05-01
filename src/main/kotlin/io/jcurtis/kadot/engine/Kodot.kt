@@ -32,6 +32,7 @@ object Kodot : JPanel(), Runnable {
 
     // Scene management
     var currentScene: Node = Node(NodeType.NODE, "CurrentScene")
+    var pendingNodes = mutableListOf<Node>()
 
     // Update thread
     val thread: Thread = Thread(this)
@@ -66,6 +67,14 @@ object Kodot : JPanel(), Runnable {
     }
 
     private fun update() {
+        if (pendingNodes.isNotEmpty()) {
+            for (node in pendingNodes) {
+                if (nodes.contains(node)) continue
+                nodes.add(node)
+            }
+            pendingNodes.clear()
+        }
+
         for (node in nodes) {
             node.update(delta)
         }

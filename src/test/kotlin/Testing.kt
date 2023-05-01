@@ -43,6 +43,11 @@ class SceneB: Node(NodeType.NODE, "Scene B") {
     }
 
     override fun ready() {
+        val text = Text("Scene Poop")
+        text.position.x = 100.0
+        text.position.y = 200.0
+        addChild(text)
+
         println("Scene B ready")
     }
 
