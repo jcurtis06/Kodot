@@ -66,6 +66,12 @@ object Kodot : JPanel(), Runnable {
     }
 
     private fun update() {
+        for (node in currentScene.deepChildren) {
+            if (node !in nodes) {
+                nodes.add(node)
+            }
+        }
+
         for (node in nodes) {
             node.update(delta)
         }
