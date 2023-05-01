@@ -26,9 +26,12 @@ class Player : KinematicBody() {
             velocity.x -= 1.0
         }
 
-        velocity.y += 1.0
+        // jumping
+        if (Input.isKeyPressed(KeyEvent.VK_SPACE)) {
+            velocity.y -= 20.0
+        }
 
-        println(Kodot.colliderNodes.size)
+        velocity.y += 1.0
 
         moveAndSlide(Direction.UP)
         velocity = Vector2(0.0, 0.0)

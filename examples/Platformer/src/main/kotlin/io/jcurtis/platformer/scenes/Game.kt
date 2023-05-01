@@ -17,7 +17,9 @@ class Game : Node(NodeType.NODE, "Game") {
         platform.position.x = 12.5
 
         val collider = CollisionBody(NodeType.COLLISION_SHAPE, "platform_collider")
-        collider.collider = CollisionShape(775, 100)
+        val shape = CollisionShape(775, 100)
+        collider.collider = shape
+        collider.addChild(shape)
         platform.addChild(collider)
 
         addChild(platform)

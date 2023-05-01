@@ -22,3 +22,8 @@ tasks.test {
 kotlin {
     jvmToolchain(8)
 }
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+    resolutionStrategy.cacheDynamicVersionsFor(0, "seconds")
+}

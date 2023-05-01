@@ -13,6 +13,8 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
     private var collidingX = false
     private var collidingY = false
 
+    var collidedDirection: Direction = Direction.NONE
+
     var velocity = Vector2(0.0, 0.0)
     private var physicsEnabled = true
 
@@ -102,12 +104,12 @@ open class KinematicBody : CollisionBody(NodeType.KINEMATIC_BODY, "KinematicBody
 
         if (collidingX) {
             velocity = Vector2(0.0, velocity.y)
-            println("colliding x")
         } else if (collidingY) {
             velocity = Vector2(velocity.x, 0.0)
-            println("colliding y")
         }
     }
 
-    open fun onCollision(body: CollisionBody, direction: Direction) {}
+    open fun onCollision(body: CollisionBody, direction: Direction) {
+        collidedDirection = direction
+    }
 }
