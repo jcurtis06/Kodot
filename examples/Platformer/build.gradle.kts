@@ -12,7 +12,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("com.github.jcurtis06:Kodot:1.0.3")
+    implementation("com.github.jcurtis06:Kodot:main-SNAPSHOT")
 }
 
 tasks.test {

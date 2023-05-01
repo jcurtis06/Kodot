@@ -86,7 +86,6 @@ object Kodot : JPanel(), Runnable {
         }
 
         for (node in nodes) {
-            println("Updating ${node.name}")
             node.update(delta)
         }
 
