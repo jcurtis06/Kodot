@@ -1,5 +1,6 @@
 package io.jcurtis.platformer.scenes
 
+import io.jcurtis.kadot.engine.Kodot
 import io.jcurtis.kadot.engine.nodes.Node
 import io.jcurtis.kadot.engine.nodes.NodeType
 import io.jcurtis.kadot.engine.nodes.graphical.ui.*
@@ -10,7 +11,7 @@ class MainMenu() : Node(NodeType.UI, "MainMenu") {
         val menu = Container(Alignment.CENTER, Sizing.FULL, 10)
 
         menu.addChild(Text("Kodot Platformer"))
-        menu.addChild(Button("Play", 100, 30, onClick = { println("Play") }))
+        menu.addChild(Button("Play", 100, 30, onClick = { Kodot.changeScene(Game()) }))
         menu.addChild(Button("Settings", 100, 30, onClick = { println("Play") }))
         menu.addChild(Button("Quit", 100, 30, onClick = { println("Play") }))
 

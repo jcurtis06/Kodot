@@ -62,6 +62,10 @@ object Kodot : JPanel(), Runnable {
         nodes.add(newScene)
 
         for (node in nodes) {
+            if (node is CollisionBody) {
+                colliderNodes.add(node)
+            }
+
             node.ready()
         }
     }
@@ -71,11 +75,18 @@ object Kodot : JPanel(), Runnable {
             for (node in pendingNodes) {
                 if (nodes.contains(node)) continue
                 nodes.add(node)
+
+                if (node is CollisionBody) {
+                    colliderNodes.add(node)
+                }
+
+                node.ready()
             }
             pendingNodes.clear()
         }
 
         for (node in nodes) {
+            println("Updating ${node.name}")
             node.update(delta)
         }
 

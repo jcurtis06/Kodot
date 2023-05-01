@@ -1,5 +1,6 @@
 package io.jcurtis.platformer.scenes
 
+import io.jcurtis.kadot.engine.Kodot
 import io.jcurtis.kadot.engine.io.Input
 import io.jcurtis.kadot.engine.nodes.Sprite
 import io.jcurtis.kadot.engine.nodes.physics.CollisionShape
@@ -24,6 +25,10 @@ class Player : KinematicBody() {
         if (Input.isKeyPressed(KeyEvent.VK_A)) {
             velocity.x -= 1.0
         }
+
+        velocity.y += 1.0
+
+        println(Kodot.colliderNodes.size)
 
         moveAndSlide(Direction.UP)
         velocity = Vector2(0.0, 0.0)
